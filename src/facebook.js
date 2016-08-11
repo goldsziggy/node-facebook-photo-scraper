@@ -1,12 +1,13 @@
 /*
 * @Author: ziggy
 * @Date:   2016-08-09 16:57:22
-* @Last Modified by:   ziggy
+* @Last Modified by:   Matthew Zygowicz
 */
 
 'use strict';
 
 import {Facebook} from 'fb';
+import shuffle from 'shuffle-array';
 import Photo from './models/photo';
 import config from './config/config';
 
@@ -90,7 +91,7 @@ function get_all_photos_request(albums, album_id, page_id, resp){
           let next_album_id = albums.pop();
           return get_all_photos_request(albums, next_album_id, '', resp);
         } else {
-          console.log(photos.length);
+          console.log('found: ' + photos.length + ' photos');
           return resp.send({error: false, payload: {photos}});
         }
       }
@@ -104,7 +105,7 @@ export function get_all_photos(albums, resp) {
 
 export function retrieve_local_photos(resp){
   Photo.find({}, function(err, photos) {
-    let myPhotos = [];
+    shuffle(photos);
     resp.send(photos);  
   });
 }
