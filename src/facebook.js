@@ -103,9 +103,11 @@ export function get_all_photos(albums, resp) {
   get_all_photos_request(albums, album_id, '', resp);
 }
 
-export function retrieve_local_photos(resp){
+export function retrieve_local_photos(resp, limit){
   Photo.find({}, function(err, photos) {
     shuffle(photos);
+    if(limit)
+      photos = photos.slice(0,limit);
     resp.send(photos);  
   });
 }

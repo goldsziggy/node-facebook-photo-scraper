@@ -17,7 +17,7 @@ app.get('/photos/aggregate', function (req, res) {
 });
 
 app.get('/photos', function (req, res) {
-  actions.retrieve_local_photos(res);
+  actions.retrieve_local_photos(res, req.query.limit);
 });
 
 app.listen(1337, function () {
